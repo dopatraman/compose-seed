@@ -17,6 +17,17 @@ var LandingPageService = function(dbSvc) {
         );
     }
 
+    this.fetchSubmissionInterestSelections = function() {
+        return this.db.query(
+            'SELECT ' +
+                'submissions.email, ' +
+                'interest_selection.interest_id ' +
+            'FROM submissions ' +
+            'JOIN interest_selection ' +
+                'ON submissions.id = interest_selection.submission_id'
+        )
+    }
+
     this.insertInterests = function(submissionId, interests) {
         var ins = interests.map(function(el) {
             return '(' + submissionId + ', ' + el + ')';
