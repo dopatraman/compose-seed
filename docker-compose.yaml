@@ -1,0 +1,44 @@
+version: '2'
+services:
+  web:
+    build: ./web
+    ports: 
+      - "3000:3000"
+    environment:
+      - NODE_MOD_DIR=/node_modules
+      - STATIC_DIR=/client/dist
+      - PORT=3000
+    links:
+      - api
+  api:
+    build: ./api
+    links:
+      - db
+    environment:
+      - PORT=80
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=web
+  db:
+    image: postgres:9.4
+    restart: always
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=web
+      - PGDATA=/tmp
+  migrations:
+    build: ./migrations
+    links:
+      - db
+    # image: zokeber/postgresql:latest
+    # # If the container is brought up more than once
+    # # these variables need to be commented out.
+    # # The startup routine breaks otherwise.
+    # # ¯\_(ツ)_/¯
+    # # environment:
+    # #   - PGDATA=/tmp
+    # #   - DB_NAME=web
+    # #   - DB_USER=docker
+    # #   - DB_PASS=password

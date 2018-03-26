@@ -1,0 +1,63 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="pvenkat" id="createSubmissionsTable">
+        <createTable catalogName="cat"
+                remarks="A table for submissions"
+                schemaName="public"
+                tableName="submissions">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="email" type="varchar(255)" />
+        </createTable>
+    </changeSet>
+    <changeSet author="pvenkat" id="createSubmissionsTable">
+        <createTable catalogName="cat"
+                remarks="A table for submissions"
+                schemaName="public"
+                tableName="submissions">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="email" type="varchar(255)" />
+        </createTable>
+    </changeSet>
+    <!--<changeSet author="pvenkat" id="interestTable">
+        <createTable catalogName="cat"
+                remarks="A table for interests"
+                schemaName="public"
+                tableName="interest">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(255)" />
+        </createTable>
+    </changeSet>-->
+    <changeSet author="pvenkat" id="interestSelectionTable">
+        <createTable catalogName="cat"
+                remarks="A table for selected interests"
+                schemaName="public"
+                tableName="interest_selection">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="submission_id" type="bigint" />
+            <column name="interest_id" type="bigint" />
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="submission_id"
+            baseTableName="interest_selection"
+            constraintName="fk_interest_selection_submission"
+            onDelete="CASCADE"
+            referencedColumnNames="id"
+            referencedTableName="submissions" />
+        <!--<addForeignKeyConstraint baseColumnNames="interest_id"
+            baseTableName="interest_selection"
+            constraintName="fk_interest_selection_interest"
+            onDelete="CASCADE"
+            referencedColumnNames="id"
+            referencedTableName="interest" />-->
+    </changeSet>
+</databaseChangeLog>
