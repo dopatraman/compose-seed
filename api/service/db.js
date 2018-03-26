@@ -24,27 +24,3 @@ var DBService = function(config) {
 }
 
 module.exports = DBService;
-
-// setTimeout(function() {
-//     pool.connect(function(err, client, done) {
-//         if (err) {
-//             return console.error(
-//                 'Error acquiring client:',
-//                 err.stack
-//                 );
-//         }
-//         console.log('DB CONNECTION OK');
-//         client.query('SELECT * FROM submissions', (err, res) => {
-//             done();
-//             if (err) { 
-//                 console.log (err.stack);
-//             }
-//             else {
-//                 console.log(res.rows);
-//             }
-//         })
-//     }, 5000);
-// });
-// pool.on('error', function (err) {
-//   console.log('Database error!', err);
-// });
