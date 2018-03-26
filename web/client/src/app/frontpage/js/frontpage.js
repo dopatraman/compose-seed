@@ -7,7 +7,7 @@ lucca.model('frontpage')
         userEmail: '',
         interestSelections: [],
         hideForm: false,
-        CTA: 'Interested? Sign up to find out when we launch.'
+        CTA: 'Interested? Sign up!'
     })
     .handle('sendEmail', function(prevState) {
         var xhr = new XMLHttpRequest();
