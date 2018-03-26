@@ -4,6 +4,6 @@
 
 lucca.model('header')
     .define({
-        title: 'Palms Post'
+        title: 'Header'
     })
     ;
