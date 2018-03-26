@@ -16,29 +16,23 @@ services:
       - db
     environment:
       - PORT=80
-      - POSTGRES_HOST=db
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=web
+    env_file:
+      - .env
   db:
     image: postgres:9.4
     restart: always
-    environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=web
-      - PGDATA=/tmp
+    env_file:
+      - .env
   migrations:
     build: ./migrations
     links:
       - db
+    env_file:
+      - .env
     # image: zokeber/postgresql:latest
     # # If the container is brought up more than once
     # # these variables need to be commented out.
     # # The startup routine breaks otherwise.
     # # ¯\_(ツ)_/¯
-    # # environment:
-    # #   - PGDATA=/tmp
-    # #   - DB_NAME=web
-    # #   - DB_USER=docker
-    # #   - DB_PASS=password
+    # # env_file:
+    # #   - .env
