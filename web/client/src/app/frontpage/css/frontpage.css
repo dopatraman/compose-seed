@@ -1,0 +1,151 @@
+.frontpage.container {
+    width: 51.375rem;
+    margin-left:auto;
+    margin-right:auto;
+    border-left: 0.05rem solid #EAEAEA;
+    border-right: 0.05rem solid #EAEAEA;
+}
+
+.frontpage.row {
+    display:flex;
+    flex-direction:row;
+    align-items:flex-start;
+    justify-content: space-between;
+}
+
+.frontpage.mainPost {
+    width: 27rem;
+    height: 16rem;
+    border-right: 0.05rem solid #EAEAEA;
+    border-bottom: 0.05rem solid #EAEAEA;
+    padding: 1.75rem 1.5rem;
+    font-family: 'PT Serif', serif;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.frontpage.mainPost .contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.frontpage.mainPost .contact.hidden {
+    display:none;
+}
+
+.frontpage.mainPost input.email {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: 1.5rem;
+    text-align: left;
+    width: 18rem;
+    margin-right: 31px;
+}
+
+.frontpage.mainPost .button.submit {
+    background-color: #3BC453;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    color: #FAFAFA;
+    cursor: pointer;
+}
+
+.frontpage.poll {
+    width: 18.3rem;
+    height: 17rem;
+    border-bottom: 0.05rem solid #EAEAEA;
+    padding: 1.26rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.frontpage.placeholder.tall {
+    padding: 1rem;
+    width:11rem;
+    height:16rem;
+    border-right: 0.05rem solid #EAEAEA;
+    border-bottom: 0.05rem solid #EAEAEA;
+}
+.frontpage.placeholder.short {
+    padding: 1rem;
+    width: 16rem;
+    height: 6rem;
+    border-right: 0.05rem solid #EAEAEA;
+    border-bottom: 0.05rem solid #EAEAEA;
+}
+.frontpage.placeholder:last-child {
+    border-right: none;
+}
+
+.placeholder.tall .placeholderImg {
+    width: 10rem;
+    height: 4rem;
+    background-color: #EAEAEA;
+    margin-left: auto;
+    margin-right: auto;
+}
+.placeholder.tall .placeholderText {
+    height: 0.3rem;
+    width: 10rem;
+    background-color: #EAEAEA;
+    margin: 0.5rem auto 0.5rem auto;
+}
+
+.placeholder.short .placeholderImg {
+    width: 14rem;
+    height: 4rem;
+    background-color: #EAEAEA;
+    margin-left: auto;
+    margin-right: auto;
+}
+.placeholder.short .placeholderText {
+    height: 0.3rem;
+    width: 14rem;
+    background-color: #EAEAEA;
+    margin: 0.5rem auto 0.5rem auto;
+}
+
+.pollRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pollbutton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+    color: #666;
+    border: 1px solid #AAA;
+    margin-bottom: 0.5rem;
+    min-width: 6rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.pollbutton:hover {
+    color: #AAA;
+    background-color:#999;
+}
+.pollbutton.selected {
+    color: #AAA;
+    background-color:#666;
+}
+.pollbutton .callout {
+    font-size: 4rem;
+}
+.pollbutton .caption {
+    font-size: 0.7rem;
+}

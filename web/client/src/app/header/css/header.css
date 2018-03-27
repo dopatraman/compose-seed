@@ -1,0 +1,91 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.header.container {
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: center;
+    border-bottom:0.05rem solid #EAEAEA;
+}
+
+.header.left {
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.header.left .category {
+    text-align:right;
+}
+
+.header.center {
+    padding: 3rem 2rem;
+}
+
+.header .title.text {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.header .title.underscore {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.header .title.underscore .hr {
+    border-bottom: 0.12rem solid #333;
+    width: 9rem;
+}
+.header .title.underscore .x {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+}
+
+.header.right {
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.header.right .category {
+    text-align:left;
+}
+
+.categoryRow {
+    display:flex;
+    flex-direction: row;
+}
+.categoryRowTop {
+    align-items:flex-end;
+}
+.categoryRowTop .category {
+    border-bottom: 0.05rem solid #333;
+}
+.categoryRowBottom {
+    align-items:flex-start;
+}
+.categoryRowBottom .category {
+    border-top: 0.05rem solid #333;
+}
+.category {
+    min-width: 5rem;
+    padding: 0.75rem;
+    border: 0.1rem solid #333;
+    font-size: 1.1rem;
+}
+.wing {
+    width: 7rem;
+}
+.wingTop {
+    border-bottom:0.05rem solid #333;
+}
+.wingBottom {
+    border-top:0.05rem solid #333;
+}

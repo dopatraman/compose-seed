@@ -1,0 +1,5 @@
+CREATE ROLE web with LOGIN PASSWORD password;
+GRANT web TO postgres;
+
+CREATE DATABASE web with OWNER web ENCODING 'UTF8';
+GRANT ALL PRIVILEGES ON DATABASE web TO postgres;
