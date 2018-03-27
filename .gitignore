@@ -1,0 +1,10 @@
+./web/node_modules/*
+./api/bin
+./api/lib
+./api/node_modules/*
+./api/package-lock.json
+./temp
+./bin
+./lib
+./temp
+.env

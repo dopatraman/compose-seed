@@ -1,0 +1,23 @@
+{
+  "name": "palmspost-api",
+  "version": "1.0.0",
+  "description": "The API for Palms Post",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "None"
+  },
+  "author": "Prakash Venkatraman",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.16.2",
+    "body-parser": "^1.18.2",
+    "request": "^2.83.0"
+  },
+  "dependencies": {
+    "pg": "^7.4.1"
+  }
+}

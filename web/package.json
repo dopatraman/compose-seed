@@ -1,0 +1,25 @@
+{
+  "name": "docker-web",
+  "version": "1.0.0",
+  "description": "A test to run docker on the web",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "None"
+  },
+  "author": "Prakash Venkatraman",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.16.2",
+    "lucca": "0.0.0",
+    "request": "^2.83.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1"
+  }
+}
