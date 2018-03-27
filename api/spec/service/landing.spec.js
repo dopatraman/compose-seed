@@ -20,5 +20,5 @@ describe("LandingPageService", () => {
             svc.fetchSubmissions();
             expect(mockDb.query).toHaveBeenCalled();
         });
-    })
-})
+    });
+});
