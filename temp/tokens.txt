@@ -1,8 +1,0 @@
-Digital Ocean
-----------------------------
-c64b6337f24a859e3f4ed6625b11a5aac61d4ef441e57b296e1da046fac356b5
-
-SWS
------------------------------
-    - authKey
-        yAewHVtQZba1jCYyfr6mSKmv2GIn1ledmB7iWKetVgLYeP2Oq0
