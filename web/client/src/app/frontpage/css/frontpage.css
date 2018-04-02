@@ -57,6 +57,14 @@
     cursor: pointer;
 }
 
+.button.auth {
+    background-color: #EA003F;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    color: #FAFAFA;
+    cursor: pointer;
+}
+
 .frontpage.poll {
     width: 18.3rem;
     height: 17rem;

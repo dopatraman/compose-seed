@@ -6,6 +6,7 @@ COPY ./package.json /app
 COPY ./app.js /app
 COPY ./controllers /app/controllers
 COPY ./service /app/service
+COPY ./common /app/common
 
 EXPOSE 80
 
