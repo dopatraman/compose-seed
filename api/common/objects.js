@@ -15,15 +15,19 @@ exports.ParcelGeometry = function(polygonString) {
         let matches = this._r.exec(this._rawString)
         if (matches !== null) {
             this.type = matches[1];
-            return this._parseCoordinates(matches[2]);
+            this.coordinates = this._parseCoordinates(matches[2]);
+            return this.coordinates;
         }
         throw new Error('Polygon string not formatted coorectly');
     }
 
+    this.toSegments = function() {
+        let coordinates = this.parse();
+    }
+
     this._parseCoordinates = function(coordString) {
         var coordPairsString = coordString.slice(2, coordString.length-2);
-        console.log(coordPairsString);
-        this.coordinates = coordPairsString.split(',')
+        return coordPairsString.split(',')
             .map((coordAsString) => {
                 return coordAsString.trim().split(' ');
             })

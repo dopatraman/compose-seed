@@ -12,7 +12,6 @@ app.set("port", process.env.PORT || 3000);
 
 /************************** ROUTES *****************************/
 app.use(express.static('client'))
-console.log(__dirname + process.env.NODE_MOD_DIR)
 app.use('/modules', express.static(__dirname + process.env.NODE_MOD_DIR));
 app.use('/assets', express.static(__dirname + process.env.STATIC_DIR));
 app.use('/data', dataController);
