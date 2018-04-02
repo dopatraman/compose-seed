@@ -4,7 +4,8 @@
   "description": "The API for Palms Post",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "node spec/support/run.js"
   },
   "repository": {
     "type": "git",
@@ -13,8 +14,10 @@
   "author": "Prakash Venkatraman",
   "license": "ISC",
   "devDependencies": {
-    "express": "^4.16.2",
     "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jasmine": "^3.1.0",
+    "jasmine-console-reporter": "^2.0.1",
     "request": "^2.83.0"
   },
   "dependencies": {
