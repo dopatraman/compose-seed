@@ -51,5 +51,5 @@ exports.getParcelGeometry = async function(address) {
     let xmlString = _parseIrregular(parcelResponse);
     let xml = await parse(xmlString);
     // make module for parsing json path
-    return new ParcelGeometry(xml.Response.Results[0].RecordSet[1].Data[0].Row[0].$.GEOMETRY).parse();
+    return new ParcelGeometry().parse(xml.Response.Results[0].RecordSet[1].Data[0].Row[0].$.GEOMETRY).toSegments();
 }

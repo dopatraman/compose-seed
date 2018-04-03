@@ -5,24 +5,33 @@ exports.Address = function(address, city, state, zipcode) {
     this.zipcode = zipcode;
 }
 
-exports.ParcelGeometry = function(polygonString) {
-    this._rawString = polygonString;
+exports.ParcelGeometry = function() {
     this._r = /(\w+)\s+(\(\((\-?\d+\.?\d+?\s\-?\d+\.?\d+\,?\s?)*\)\))/
     this.type = null;
     this.coordinates = [];
     
-    this.parse = function() {
-        let matches = this._r.exec(this._rawString)
+    this.parse = function(polygonString) {
+        let matches = this._r.exec(polygonString);
         if (matches !== null) {
             this.type = matches[1];
             this.coordinates = this._parseCoordinates(matches[2]);
-            return this.coordinates;
+            return this;
         }
         throw new Error('Polygon string not formatted coorectly');
     }
 
     this.toSegments = function() {
-        let coordinates = this.parse();
+        var segment = [];
+        var acc = [];
+        for (var i = 0; i < this.coordinates.length; i++) {
+            var point = this.coordinates[i];
+            segment.push(point);
+            if (segment.length == 2) {
+                acc.push(segment);
+                segment = [point];
+            }
+        }
+        return acc;
     }
 
     this._parseCoordinates = function(coordString) {
