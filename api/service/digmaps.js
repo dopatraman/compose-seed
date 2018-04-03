@@ -10,6 +10,9 @@ var _getSessionUrl = async function() {
     });
     let body = await parse(resp);
     // make module for parsing json path
+    if (body.Response.Error) {
+        throw new Error("Error authenticating with Digmaps");
+    }
     let token = body.Response.Success[0].$.message;
     let [space, first, second, third] = token.split('/');
     return `http://${first}.parcelstream.com/${second}/InitSession.aspx?sik=${second}/${third}&output=xml`;
