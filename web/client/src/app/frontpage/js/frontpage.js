@@ -15,6 +15,7 @@ lucca.model('frontpage')
     .handle('sendAuthRequest', function(prevState) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/digmaps', true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
                 prevState.digResults = parseToCSV(JSON.parse(xhr.response), '45 Roxy Ave');
