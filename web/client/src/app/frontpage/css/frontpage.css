@@ -2,8 +2,6 @@
     width: 51.375rem;
     margin-left:auto;
     margin-right:auto;
-    border-left: 0.05rem solid #EAEAEA;
-    border-right: 0.05rem solid #EAEAEA;
 }
 
 .frontpage.row {
@@ -57,12 +55,24 @@
     cursor: pointer;
 }
 
+.buttonContainer {
+    margin-top: 1rem;
+    width: 27rem;
+    margin-left: auto;
+}
 .button.auth {
-    background-color: #EA003F;
+    border: 2px solid #EA003F;
     padding: 0.5rem 1rem;
-    border-radius: 3px;
-    color: #FAFAFA;
+    border-radius: 6px;
+    color: #EA003F;
     cursor: pointer;
+    text-align: right;
+    font-size: 23px;
+    transition: all 0.3s ease-in-out;
+}
+.button.auth:hover {
+    background-color: #EA003F;
+    color:#FAFAFA;
 }
 
 .frontpage.poll {
@@ -156,4 +166,43 @@
 }
 .pollbutton .caption {
     font-size: 0.7rem;
+}
+
+.formElement {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #DADADA;
+    align-items: center;
+}
+
+.formLabel {
+    width: 6rem;
+    height: 3.05rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid #DADADA;
+    align-items: flex-end;
+    padding-right: 1rem;
+}
+
+input.formInput {
+    outline: none;
+    border: none;
+    height: 49px;
+    width: 318px;
+    font-size: 19px;
+    font-weight: bold;
+    padding-left: 1rem;
+}
+
+.digFormContainer {
+    margin-left: auto;
+    margin-right: auto;
+    width: 34rem;
+}
+
+.digForm {
+    display: flex;
+    flex-direction: column;
 }
