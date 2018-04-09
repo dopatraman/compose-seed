@@ -1,30 +1,15 @@
 const { get, getJSON } = require('../common/http');
 const { parse } = require('../common/xml');
 const { ParcelGeometry } = require('../common/objects');
+const strings = require('../common/strings');
 
-var _getSessionUrl = async function() {
-    let resp = await get('http://parcelstream.com/admin/getsik.aspx', {
-        account: 'ProspectSandbox',
-        login: 'Abode',
-        group: 'Abode'
-    });
-    let body = await parse(resp);
-    // make module for parsing json path
-    if (body.Response.Error) {
-        throw new Error("Error authenticating with Digmaps");
-    }
-    let token = body.Response.Success[0].$.message;
-    let [space, first, second, third] = token.split('/');
-    return `http://${first}.parcelstream.com/${second}/InitSession.aspx?sik=${second}/${third}&output=xml`;
-}
-
-var _candy = async function() {
-    let url = await _getSessionUrl();
-    let resp = await get(url);
-    let body = await parse(resp);
-    // make module for parsing json path
-    let data = body.Response.Results[0].Data[0].Row[0].$;
-    return [data.Candy, data.Domains];
+exports.getParcelGeometry = async function(address) {
+    let parcelResponse = await _getParcelDetails(address);
+    let xmlString = _parseIrregular(parcelResponse);
+    let xml = await parse(xmlString);
+    // @TODO:
+    // parse json path somewhere else
+    return new ParcelGeometry().parse(xml.Response.Results[0].RecordSet[1].Data[0].Row[0].$.GEOMETRY).toSegments();
 }
 
 var _getParcelDetails = async function(address) {
@@ -44,15 +29,36 @@ var _getParcelDetails = async function(address) {
     return await get(url);
 }
 
+var _candy = async function() {
+    let url = await _getSessionUrl();
+    let resp = await get(url);
+    let body = await parse(resp);
+    // make module for parsing json path
+    let data = body.Response.Results[0].Data[0].Row[0].$;
+    return [data.Candy, data.Domains];
+}
+
+var _getSessionUrl = async function() {
+    let [_, first, second, third] = await _auth();
+    return `http://${first}.parcelstream.com/${second}/InitSession.aspx?sik=${second}/${third}&output=xml`;
+}
+
+var _auth = async function() {
+    let resp = await get(strings.parcelStreamAuthUrl, {
+        account: strings.parcelStreamAccountName,
+        login: strings.parcelStreamLogin,
+        group: strings.parcelStreamGroupName
+    });
+    let body = await parse(resp);
+    if (body.Response.Error) {
+        throw new Error(strings.errors.auth);
+    }
+    let token = body.Response.Success[0].$.message;
+    // The names "first", "second", and "third" are literally used in the official docs
+    return token.split('/');
+}
+
 var _parseIrregular = function(irregularParcelResp) {
     let [ _, __, irregularXmlString] = irregularParcelResp.split('\n');
     return irregularXmlString.slice(2, irregularXmlString.length-2).replace(/\\/g, '');
-}
-
-exports.getParcelGeometry = async function(address) {
-    let parcelResponse = await _getParcelDetails(address);
-    let xmlString = _parseIrregular(parcelResponse);
-    let xml = await parse(xmlString);
-    // make module for parsing json path
-    return new ParcelGeometry().parse(xml.Response.Results[0].RecordSet[1].Data[0].Row[0].$.GEOMETRY).toSegments();
 }
