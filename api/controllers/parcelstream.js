@@ -7,8 +7,7 @@ exports.getParcelDetails = async (ctx) => {
 	// @TODO:
 	// validate address somehow
 	let geom = await digmapService.getParcelGeometry(
-		// Example:
-		// new Address('25482 buckwood', 'Lake Forest', 'CA', '92630')
+// new Address('25482 buckwood', 'Lake Forest', 'CA', '92630')
 		new Address(
 			body.address1,
 			body.address2,

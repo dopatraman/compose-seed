@@ -12,13 +12,20 @@ lucca.model('frontpage')
         zipcode: '',
         digResults: ''
     })
+    .handle('refresh', function(prevState) {
+        lucca.renderer.projector.scheduleRender();
+    })
     .handle('sendAuthRequest', function(prevState) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/digmaps', true);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
-                prevState.digResults = parseToCSV(JSON.parse(xhr.response), '45 Roxy Ave');
+                var resp = JSON.parse(xhr.response);
+                resp.error
+                ? prevState.digResults = resp.error
+                : prevState.digResults = parseToCSV(resp, formatStreet(prevState.address1));
+                lucca.actionDispatcher.dispatch('refresh');
             }
         }
         xhr.send(JSON.stringify({
@@ -63,6 +70,7 @@ lucca.model('frontpage')
 
 lucca.view('frontpage')
     .define(function(h, v, i, a) {
+        console.log(i['digResults']);
         return h.tml('div.frontpage.container', {}, [
             h.tml('div.digFormContainer', {}, [
                 h.tml('div.digForm', {}, [
@@ -92,7 +100,7 @@ lucca.view('frontpage')
                 ])
             ]),
             h.tml('div.digResultsContainer', {}, [
-                h.tml('div.digResults', {}, [i['digResults']])
+                h.tml('pre.digResults', {}, [i['digResults']])
             ])
         ])
     })
@@ -107,7 +115,8 @@ lucca.vm('frontpage')
         updateAddress2: 'updateAddress2',
         updateCity: 'updateCity',
         updateState: 'updateState',
-        updateZipcode: 'updateZipcode'
+        updateZipcode: 'updateZipcode',
+        refresh: 'refresh'
     });
  /***************** HELPERS ********************/
  var CSVPoint = function(id, group, long, lat, street) {
@@ -116,7 +125,6 @@ lucca.vm('frontpage')
      this.long = long;
      this.lat = lat;
      this.street = street;
-     console.log(this.street);
      this.render = function() {
          return [this.id, this.group, this.long, this.lat, this.street].join(',');
      }
@@ -135,4 +143,7 @@ lucca.vm('frontpage')
     var lines = acc.map((el) => {return el.render()});
     lines.unshift('id,group,long(x),lat(y),street');
     return lines.join('\n');
+ }
+ function formatStreet(address1) {
+    return address1.split(' ').slice(1).join(' ');
  }
