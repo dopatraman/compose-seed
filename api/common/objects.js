@@ -1,5 +1,6 @@
-exports.Address = function(address, city, state, zipcode) {
-    this.address = address;
+exports.Address = function(address1, address2, city, state, zipcode) {
+    this.address1 = address1;
+    this.address2 = address2;
     this.city = city;
     this.state = state;
     this.zipcode = zipcode;
@@ -17,7 +18,7 @@ exports.ParcelGeometry = function() {
             this.coordinates = this._parseCoordinates(matches[2]);
             return this;
         }
-        throw new Error('Polygon string not formatted coorectly');
+        throw new Error('Polygon string not formatted correctly');
     }
 
     this.toSegments = function() {

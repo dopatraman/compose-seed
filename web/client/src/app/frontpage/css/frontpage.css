@@ -190,7 +190,7 @@ input.formInput {
     outline: none;
     border: none;
     height: 49px;
-    width: 318px;
+    width: 418px;
     font-size: 19px;
     font-weight: bold;
     padding-left: 1rem;
@@ -205,4 +205,11 @@ input.formInput {
 .digForm {
     display: flex;
     flex-direction: column;
+}
+
+.digResultsContainer {
+    margin-left: 16rem;
+    margin-right: auto;
+    width: 34rem;
+    margin-top: 1rem;
 }

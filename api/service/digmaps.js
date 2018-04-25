@@ -28,9 +28,10 @@ var _candy = async function() {
 }
 
 var _getParcelDetails = async function(address) {
+    console.log(address);
     let [candy, domain] = await _candy();
     let url = `${domain}/GetGeocode.aspx?
-&address=${encodeURIComponent(address.address)}
+&address=${encodeURIComponent(address.address1)}
 &city=${encodeURIComponent(address.city)}
 &state=${address.state}&zip=${address.zipcode}
 &links={PROP:{Class:'Dmp.Neptune.Links.KeyLink',To:'SS.Prop.ParcelDetail/ParcelDetail',FromKey:'ADDRESSID',ToKey:'ADDRESS_ID'}}
@@ -54,5 +55,9 @@ exports.getParcelGeometry = async function(address) {
     let xmlString = _parseIrregular(parcelResponse);
     let xml = await parse(xmlString);
     // make module for parsing json path
+    if (xml.Response.Error) {
+        console.error(xml.Response.Error);
+        return {error: "Address is invalid"}
+    }
     return new ParcelGeometry().parse(xml.Response.Results[0].RecordSet[1].Data[0].Row[0].$.GEOMETRY).toSegments();
 }
