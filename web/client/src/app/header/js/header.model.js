@@ -4,6 +4,6 @@
 
 lucca.model('header')
     .define({
-        title: 'Abode Console'
+        title: 'C5 Console'
     })
     ;

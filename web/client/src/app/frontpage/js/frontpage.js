@@ -4,7 +4,7 @@
 
 lucca.model('frontpage')
     .define({
-        authCTA: 'Dig!',
+        authCTA: 'Save!',
         address1: '',
         address2: '',
         city: '',
@@ -21,10 +21,8 @@ lucca.model('frontpage')
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
-                var resp = JSON.parse(xhr.response);
-                resp.error
-                ? prevState.digResults = resp.error
-                : prevState.digResults = parseToCSV(resp, formatStreet(prevState.address1));
+                console.log(xhr.response);
+                prevState["digResults"] = `${xhr.response}`;
                 lucca.actionDispatcher.dispatch('refresh');
             }
         }
