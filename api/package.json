@@ -14,13 +14,15 @@
   "author": "Prakash Venkatraman",
   "license": "ISC",
   "devDependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
     "jasmine": "^3.1.0",
     "jasmine-console-reporter": "^2.0.1",
-    "request": "^2.83.0"
+    "koa": "^2.5.0",
+    "koa-route": "^3.2.0",
+    "pg": "^7.4.1",
+    "xml2js": "^0.4.19"
   },
   "dependencies": {
-    "pg": "^7.4.1"
+    "koa-bodyparser": "^4.2.0",
+    "request": "^2.85.0"
   }
 }

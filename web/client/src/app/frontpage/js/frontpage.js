@@ -4,93 +4,146 @@
 
 lucca.model('frontpage')
     .define({
-        userEmail: '',
-        interestSelections: [],
-        hideForm: false,
-        CTA: 'Interested? Sign up!'
+        authCTA: 'Dig!',
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zipcode: '',
+        digResults: ''
     })
-    .handle('sendEmail', function(prevState) {
+    .handle('refresh', function(prevState) {
+        lucca.renderer.projector.scheduleRender();
+    })
+    .handle('sendAuthRequest', function(prevState) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/data', true);
+        xhr.open('POST', '/digmaps', true);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                var resp = JSON.parse(xhr.response);
+                resp.error
+                ? prevState.digResults = resp.error
+                : prevState.digResults = parseToCSV(resp, formatStreet(prevState.address1));
+                lucca.actionDispatcher.dispatch('refresh');
+            }
+        }
         xhr.send(JSON.stringify({
-            userEmail: prevState.userEmail,
-            interests: prevState.interestSelections
+            address1: prevState.address1,
+            address2: prevState.address2,
+            city: prevState.city,
+            state: prevState.state,
+            zipcode: prevState.zipcode
         }));
-        prevState.CTA = 'Thank you! You\'ll be hearing from us soon!';
-        prevState.hideForm = true;
+        console.log('Sent auth request!');
     })
-    .handle('updateUserEmail', function(prevState, evt) {
-        prevState.userEmail = evt.srcElement.value;
+    .handle('updateAddress1', function(prevState, evt) {
+        var val = evt.srcElement.value;
+        if (val) {
+            prevState.address1 = val;
+        }
     })
-    .handle('updateInterestSelection', function(prevState, evt) {
-        var id = parseInt(evt.srcElement.id.split('poll-')[1]);
-        var idx = prevState.interestSelections.indexOf(id);
-        if (!isNaN(id) && idx == -1) {
-            prevState.interestSelections.push(id);
+    .handle('updateAddress2', function(prevState, evt) {
+        var val = evt.srcElement.value;
+        if (val) {
+            prevState.address2 = val;
         }
-        else if (idx > -1) {
-            prevState.interestSelections.splice(idx, 1);
+    })
+    .handle('updateCity', function(prevState, evt) {
+        var val = evt.srcElement.value;
+        if (val) {
+            prevState.city = val;
         }
-    });
+    })
+    .handle('updateState', function(prevState, evt) {
+        var val = evt.srcElement.value;
+        if (val.length >= 2) {
+            prevState.state = val.slice(0, 2).toUpperCase();
+        }
+    })
+    .handle('updateZipcode', function(prevState, evt) {
+        var val = evt.srcElement.value;
+        if (val.length >= 5) {
+            prevState.zipcode = val.slice(0,5);
+        }
+    })
 
 lucca.view('frontpage')
     .define(function(h, v, i, a) {
+        console.log(i['digResults']);
         return h.tml('div.frontpage.container', {}, [
-            h.tml('div.frontpage.row', {}, [
-                v('placeholderShort', {getData: function(){}}),
-                v('placeholderShort', {getData: function(){}}),
-                v('placeholderShort', {getData: function(){}})
-            ]),
-            h.tml('div.frontpage.row', {}, [
-                h.tml('div.frontpage.mainPost', {}, [
-                    h.tml('div.frontpage.cta', {}, [i['CTA']]),
-                    h.tml('div.frontpage.contact', {
-                        classes: {
-                            hidden: i['hideForm']
-                        },
-                    }, [
-                        h.tml('input.email', {
-                            type:'text',
-                            onkeyup: a.changeUserEmail}, []),
-                        h.tml('div.button.submit', {onclick: a.submitEmail}, ['Send!'])
+            h.tml('div.digFormContainer', {}, [
+                h.tml('div.digForm', {}, [
+                    h.tml('div.formElement.address1', {}, [
+                        h.tml('div.formLabel.address1', {}, ['Address 1']),
+                        h.tml('input.formInput.address1', {type: 'text', onkeyup: a.updateAddress1}, [])
+                    ]),
+                    h.tml('div.formElement.address2', {}, [
+                        h.tml('div.formLabel.address2', {}, ['Address 2']),
+                        h.tml('input.formInput.address2', {type: 'text', onkeyup: a.updateAddress2}, [])
+                    ]),
+                    h.tml('div.formElement.city', {}, [
+                        h.tml('div.formLabel.city', {}, ['City']),
+                        h.tml('input.formInput.city', {type: 'text', onkeyup: a.updateCity}, [])
+                    ]),
+                    h.tml('div.formElement.state', {}, [
+                        h.tml('div.formLabel.state', {}, ['State']),
+                        h.tml('input.formInput.state', {type: 'text', onkeyup: a.updateState}, [])
+                    ]),
+                    h.tml('div.formElement.zipcode', {}, [
+                        h.tml('div.formLabel.zipcode', {}, ['Zipcode']),
+                        h.tml('input.formInput.zipcode', {type: 'text', onkeyup: a.updateZipcode}, [])
                     ])
                 ]),
-                h.tml('div.frontpage.poll', {}, [
-                    h.tml('div.frontpage.pollRow', {}, [
-                        v('pollbutton', {getData: function() {
-                            return { id: 1, name: 'Ne', caption:'News', getInterests: function() {return i['interestSelections']}}
-                        }}),
-                        v('pollbutton', {getData: function() {
-                            return { id: 2, name: 'Fo', caption:'Food', getInterests: function() {return i['interestSelections']}}
-                        }})
-                    ]),
-                    h.tml('div.frontpage.pollRow', {}, [
-                        v('pollbutton', {getData: function() {
-                            return { id: 3, name: 'Pa', caption:'Parking', getInterests: function() {return i['interestSelections']}}
-                        }}),
-                        v('pollbutton', {getData: function() {
-                            return { id: 4, name: 'Ot', caption:'Other', getInterests: function() {return i['interestSelections']}}
-                        }})
-                    ])
+                h.tml('div.buttonContainer', {}, [
+                    h.tml('div.button.auth', {onclick: a.dig}, [i['authCTA']])
                 ])
             ]),
-            h.tml('div.frontpage.row', {}, [
-                v('placeholderTall', {getData: function(){}}),
-                v('placeholderTall', {getData: function(){}}),
-                v('placeholderTall', {getData: function(){}}),
-                v('placeholderTall', {getData: function(){}})
+            h.tml('div.digResultsContainer', {}, [
+                h.tml('pre.digResults', {}, [i['digResults']])
             ])
         ])
     })
-    .registerActions('submitEmail', 'changeUserEmail', 'getEmail')
+    .registerActions('dig', 'updateAddress1', 'updateAddress2', 'updateCity', 'updateState', 'updateZipcode')
 
 lucca.vm('frontpage')
     .model('frontpage')
     .view('frontpage')
     .accept({
-        submitEmail: 'sendEmail',
-        changeUserEmail: 'updateUserEmail',
-        getEmail: 'getEmail',
-        select: 'updateInterestSelection'
+        dig: 'sendAuthRequest',
+        updateAddress1: 'updateAddress1',
+        updateAddress2: 'updateAddress2',
+        updateCity: 'updateCity',
+        updateState: 'updateState',
+        updateZipcode: 'updateZipcode',
+        refresh: 'refresh'
     });
+ /***************** HELPERS ********************/
+ var CSVPoint = function(id, group, long, lat, street) {
+     this.id = id;
+     this.group = group;
+     this.long = long;
+     this.lat = lat;
+     this.street = street;
+     this.render = function() {
+         return [this.id, this.group, this.long, this.lat, this.street].join(',');
+     }
+ }
+ function parseToCSV(segments, street) {
+    var acc = [];
+    for (var i = 0; i < segments.length; i++) {
+        var group = i + 1;
+        var id = group * 2;
+        if (i % 2 == 0) {
+            id -= 1;
+        }
+        acc.push(new CSVPoint(group*2 - 1, group, segments[i][0][0], segments[i][0][1], street));
+        acc.push(new CSVPoint(group*2, group, segments[i][1][0], segments[i][1][1], street));
+    }
+    var lines = acc.map((el) => {return el.render()});
+    lines.unshift('id,group,long(x),lat(y),street');
+    return lines.join('\n');
+ }
+ function formatStreet(address1) {
+    return address1.split(' ').slice(1).join(' ');
+ }
